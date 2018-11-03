@@ -7,20 +7,24 @@
   <title>티켓 Mart</title>
   <link href="../stylesheets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script>
-  function submit_check() {
-    if (!username.value||!email.value||!displayName.value||!password.value||!confirm_password.value)  {
-      alert('항목을 다시 한번 확인해보세요.');
-      return false;
-    }
-    if(!(password.value==confirm_password.value)){
-      alert('비밀번호와 비밀번호 확인의 값이 다릅니다.');
-      return false;
-    }
-  }
+//   function submit_check() {
+//     if (!username.value||!email.value||!displayName.value||!password.value||!confirm_password.value)  {
+//       alert('항목을 다시 한번 확인해보세요.');
+//       return false;
+//     }
+//     if(!(password.value==confirm_password.value)){
+//       alert('비밀번호와 비밀번호 확인의 값이 다릅니다.');
+//       return false;
+//     }
+//   }
 </script>
 </head>
 <body>
   <style type="text/css">
+  footer {
+        position: relative;
+        top: 50px;
+    }
   .jumbotron{
     background-color: #FAED71;
     text-shadow: black 0.2em 0.2em 0.2em;
@@ -134,30 +138,28 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/"><font style="font-weight: bold; font-size: 30px; color: black; text-shadow: #FAED71 0.2em 0.2em 0.2em;">티켓 Market</font></a>
+      <a class="navbar-brand" href="/"><font style="font-weight: bold; font-size: 30px;   color: black">Ticket MarT</font></a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="/ticketlist">티켓보기<span class="sr-only"></span></a></li>
+        <li><a href="/ticketlist">티켓목록<span class="sr-only"></span></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if(!user) { %>
-        <li><a href="/auth/login">로그인</a></li>
-        <li><a href="/auth/register">회원가입</a></li>
+            <li><a href="/auth/login">로그인</a></li>
+            <li><a href="/auth/register">회원가입</a></li>
         <% } else { %>
-          <li><a><font style="font-weight: bold; font-size: 20px;">Welcome &nbsp;<%= user.displayName %>님</font></a></li>
-          <%  if(user.displayName== '관리자') { %>
-            <li><a href="/mypage">관리하기</a></li>
-          <% } else{ %>
+            <li><a><font style="font-weight: bold; font-size: 20px;">&nbsp;<%= user.displayName %>님</font></a></li>
             <li><a href="/mypage">마이페이지</a></li>
-            <% } %>
-          <li><a href="/auth/logout">로그아웃</a></li>
+            <li><a href="/auth/logout">로그아웃</a></li>
         <% } %>
      </ul>
 
    </div>
  </div>
 </nav>
+
+<br><br><br><br><br>
 <div class="container">
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
@@ -194,7 +196,7 @@
                 <div class="form-group">
                   <div class="row">
                     <div class="col-sm-6 col-sm-offset-3">
-                      <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register"  onclick="return submit_check()" value="회원가입하기">
+                      <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register"   value="회원가입하기">
                     </div>
                   </div>
                 </div>
@@ -208,46 +210,124 @@
 </div>
 
 <br><br><br><br><br><br>
-<footer style="background-color: #FAED71; color: dark;">
+<footer style="background-color: rgb(236, 236, 236); color: dark;">
     <div class="container">
-      <br>
-      <div class="row">
-        <div class="col-sm-2">
-          <h5>Copyright &copy; 2018</h5>
-        </div>
-        <div class="col-sm-4">
-          <h5>Introduce</h5>
-          <p>현장 암표를 예방한 티켓팅하는 페이지입니다. <br>
-          안전한 티켓문화 권장합니다.</p>
+        <br>
+        
+        <div class="row">
+            <div class="col-sm-2">
+                <h5>Copyright &copy; 2018</h5>
+            </div>
+            <div class="col-sm-4">
+                <h5>Introduce</h5>
+                <p>현장 암표를 예방한 티켓팅하는 페이지입니다. <br>
+                안전한 티켓문화 권장합니다.</p>
+            </div>
         </div>
 
-      </div>
-
+        <br>
     </div>
-  </footer>
+</footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="../stylesheets/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-  $(function() {
+    $(function() {
 
-    $('#login-form-link').click(function(e) {
-      $("#login-form").delay(100).fadeIn(100);
-      $("#register-form").fadeOut(100);
-      $('#register-form-link').removeClass('active');
-      $(this).addClass('active');
-      e.preventDefault();
+        $('#login-form-link').click(function(e) {
+        $("#login-form").delay(100).fadeIn(100);
+        $("#register-form").fadeOut(100);
+        $('#register-form-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+        });
+        $('#register-form-link').click(function(e) {
+        $("#register-form").delay(100).fadeIn(100);
+        $("#login-form").fadeOut(100);
+        $('#login-form-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+        });
+
+        $(document).on('click', 'input:submit', function(){
+            return submit_check();
+        });
+
     });
-    $('#register-form-link').click(function(e) {
-      $("#register-form").delay(100).fadeIn(100);
-      $("#login-form").fadeOut(100);
-      $('#login-form-link').removeClass('active');
-      $(this).addClass('active');
-      e.preventDefault();
-    });
+    var cln = $('.form-group:first').clone();
 
-  });
+    function submit_check() {
+        if (!username.value||!email.value||!displayName.value||!password.value||!confirm_password.value)  {
+            alert('항목을 다시 한번 확인해보세요.');
+            return false;
+        } else if(!(password.value==confirm_password.value)){
+            alert('비밀번호와 비밀번호 확인의 값이 다릅니다.');
+            return false;
+        } else {
+            console.log("username: " + username.value);
+            if(confirm("가입을 완료하시겠습니까?") == true){    
+                // return true;
+                var returnData = callApi(username.value, displayName.value, email.value);
+                console.log(returnData);
+                if(returnData != null){
+                  console.log("submit_check()에서 리턴받은 data: "+ returnData);
+                  createEl(returnData);
+                  return true;
+                } else {
+                  alert("submit_checK()에서 리턴값 못받아옴 ㅠ");
+                }
+            } else {
+                window.location.reload();
+                alert("가입을 취소하셨습니다.");
+            }
+        }
+    }
 
+    function callApi(userId, displayName, email){
+        var params = {
+            // Request parameters
+        };
+        var obj = {
+            "name": userId,
+            "userData": "displayName: " + displayName + ", email: " + email
+        }
+
+        $.ajax({
+          url: "https://southeastasia.api.cognitive.microsoft.com/face/v1.0/largepersongroups/18061001/persons?" + $.param(params),
+          beforeSend: function(xhrObj){
+              // Request headers
+              xhrObj.setRequestHeader("Content-Type","application/json");
+              xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","27137d0eff8747a8b311a984837f29fb");
+          },
+          type: "POST",
+          async: false,                         // data 넘겨주기 point 1!
+          // Request body
+          data: JSON.stringify(obj),
+          complete: console.log("FaceApi 호출 완료!"),
+        })
+        .done(function(data) {
+          console.log("data: "+ JSON.stringify(data));                    // obj 통째로 받아올 때
+          console.log("data.personId: "+ JSON.stringify(data.personId));  // obj key에 따른 value 하나만 가져올 때 
+        //   var personId = JSON.stringify(data.personId);
+          var personId = data.personId;
+          console.log("success! personId:", personId);
+          callApi.objDataReturned = personId;     // data 넘겨주기 point 2!
+        })
+        .fail(function(error) {
+          console.log(error);
+          alert("error"+JSON.stringify(error));
+        });
+
+        return callApi.objDataReturned;         // data 넘겨주기 point 3!
+    }
+
+    function createEl(data){
+        console.log("jsonReturnData: ", data);
+        cln.children().attr('name', 'personId').attr('id', 'personId').removeAttr('placeholder').attr('value', data).attr('type', 'hidden');
+        cln.appendTo('#register-form');
+    }
+
+    
 </script>
 </body>
 </html>

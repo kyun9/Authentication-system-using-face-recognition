@@ -15,9 +15,9 @@ app.use(session({                     /*------------세션 설정부분---------
   store:new MySQLStore({
     host:'localhost',
     port:3306,
-    user:'root',
-    password:'111111',
-    database:'ticket'
+    user:'20181team',
+    password:'gachon654321',
+    database:'20181team_G'
   })
 }));
 
@@ -30,10 +30,9 @@ var passport = require('./routes/config/passport')(app);   //passport 맨위로
 
 var index = require('./routes/index');   /*------------메인페이지----------*/
 var ticketlist= require('./routes/ticketlist')(); /*------------티켓리스트페이지----------*/
-var ticketcontent= require('./routes/ticketcontent')(); /*------------티켓콘텐츠페이지----------*/
+var ticketcontent= require('./routes/ticketcontent')(passport); /*------------티켓콘텐츠페이지----------*/
 var mypage = require('./routes/mypage')(passport);/*------------마이페이지----------*/
 var auth = require('./routes/auth')(passport);/*------------인증(로그인/회원가입)----------*/
-
 
 app.use('/', index);
 app.use('/ticketlist', ticketlist);
@@ -41,31 +40,34 @@ app.use('/ticketcontent', ticketcontent);
 app.use('/auth/', auth);
 app.use('/mypage', mypage);
 
-// app.get('/welcome', function(req, res){     /*@@@@@@@@@@@@임시 로그인 welcome 페이지@@@@@@@@@@@@@@@@@@@*/
-//   if(req.user && req.user.displayName){
-//     res.send(`
-//       <h1>hello, ${req.user.displayName}</h1>
-//       <a href="/auth/logout">logout</a>
-//       `)
-//     }
-//     else{
-//       res.send(`
-//       <h1>welcome</h1>
-//       <a href="/auth/login">login</a>
-//     `)
-//   }
-// });
+// 관리자
+var admin = require('./routes/admin')(); /*------------관리자 페이지----------*/
 
+app.use('/admin', admin);
 
-
-                                            /*------------콘솔에 포트 연결 알림.----------*/
-app.listen(3003, function(){
-  console.log('Connected 3003 port!!!');
+ /*------------콘솔에 포트 연결 알림.----------*/
+app.listen(62001, function(){
+  console.log('Connected 62001 port!!!');
 });
 
+// // catch 404 and forward to error handler
+// app.use(function(req, res, next) {
+//     var err = new Error('Not Found');
+//     err.status = 404;
+//     next(err);
+//   });
+  
+//   // error handler
+//   app.use(function(err, req, res, next) {
+//     // set locals, only providing error in development
 
-
-
+//     // res.locals.message = err.message;
+//     // res.locals.error = req.app.get('env') === 'development' ? err : {};
+  
+//     // render the error page
+//     res.status(err.status || 500);
+//     res.render('error', { error : err});
+//   });
 
 module.exports = app;
 

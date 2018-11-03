@@ -1,4 +1,5 @@
 module.exports = function(app) {
+//   var KakaoStrategy = require('passport-kakao').Strategy;
   var conn = require('./db')();
   var bkfd2Password = require('pbkdf2-password');
   var passport = require('passport');
@@ -19,7 +20,7 @@ module.exports = function(app) {
     conn.query(sql, [id], function(err, results) {
       if (err) {
         console.log(err);
-        done('There is no user.');
+        done(null, false, 'There is no user.');
       } else {
         done(null, results[0]);
       }
@@ -33,7 +34,7 @@ module.exports = function(app) {
       conn.query(sql, ['local : ' + uname], function(err, results) {
         console.log(results); //생략가능
         if (err) {
-          return done('There is no user.');
+          return done(false, null);
         }
         var user = results[0];
         return hasher({
@@ -52,5 +53,21 @@ module.exports = function(app) {
       });
     }
   ));
+
+  // 카카오 로그인
+//   passport.use(new KakaoStrategy({
+//     clientID: "db55562a78dbf70f331c10d91a6ab953",
+//     callbackURL: "http://210.102.181.158:62001/"
+//   },
+//   function (accessToken, refreshToken, profile, done) {
+//     var _profile = profile._json;
+//     loginByThirdparty({
+//       'auth_type': 'kakao',
+//       'auth_id': _profile.id,
+//       'auth_name': _profile.properties.nickname,
+//       'auth_email': _profile.id
+//     }, done);
+//   }
+// ));
   return passport;
 }

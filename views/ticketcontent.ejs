@@ -8,7 +8,16 @@
   <link href="../stylesheets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
+<style>
+    .price {
+        font-size: 20px;
+        color: dodgerblue;
+    }
+    footer {
+        position: relative;
+        top: 100px;
+    }
+</style>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -18,49 +27,61 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/"><font style="font-weight: bold; font-size: 30px; color: black; text-shadow: #FAED71 0.2em 0.2em 0.2em;">티켓 Market</font></a>
+      <a class="navbar-brand" href="/"><font style="font-weight: bold; font-size: 30px;   color: black">Ticket MarT</font></a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="/ticketlist">티켓보기<span class="sr-only"></span></a></li>
+        <li><a href="/ticketlist">티켓목록<span class="sr-only"></span></a></li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         <% if(!user) { %>
-        <li><a href="/auth/login">로그인</a></li>
-        <li><a href="/auth/register">회원가입</a></li>
+            <li><a href="/auth/login">로그인</a></li>
+            <li><a href="/auth/register">회원가입</a></li>
         <% } else { %>
-          <li><a><font style="font-weight: bold; font-size: 20px;">Welcome &nbsp;<%= user.displayName %>님</font></a></li>
-          <%  if(user.displayName== '관리자') { %>
-            <li><a href="/mypage">관리하기</a></li>
-          <% } else{ %>
+            <li><a><font style="font-weight: bold; font-size: 20px;">&nbsp;<%= user.displayName %>님</font></a></li>
             <li><a href="/mypage">마이페이지</a></li>
-            <% } %>
-          <li><a href="/auth/logout">로그아웃</a></li>
+            <li><a href="/auth/logout">로그아웃</a></li>
         <% } %>
       </ul>
-
     </div>
   </div>
 
 </nav>
 
-
+<br><br>
 <div class="container">
-  <h1 style="text-align: center;">티켓 상세 내용</h1>
-  <hr>
-  <div class="col-sm-3 col-sm-offset-2">
-    <img src="img/1_b.png" width="250px" height="300px">
-  </div>
-  <div class="col-sm-4 col-sm-offset-1" style="text-align: right;">
-    <h3>공연</h3>
-    <br>
-    <p> 1. 효율적인 암표방지 : 암표 매매를 일일이 단속할 필요가 없어져 효율적인 암표 예방 가능
-      2. 티켓관리 편의성 : 회원의 얼굴을 비교함으로써 티켓에 대한 필요성이 없어짐<br>
-      3. 입장시간 단축 : 입장시 그룹으로 묶어 카메라로 검사하여 시간을 월등히 단축<br>
-    4. 서비스 확장성 : 얼굴인식 기능이 필요한 다양한 서비스에 적용 가능</p><br>
-    <p><a class="btn btn-primary" href="#">티켓구매하기</a></p>
-  </div>
-
+    
+    <h2 style="text-align: center;">티켓 상세 내용</h2>
+    <hr>
+    <% for(let data of results) { %>
+    <div class="col-sm-3 col-sm-offset-1">
+        <img src="../<%= data.ImgPath %>" width="400px" height="400px">
+    </div>
+    <div class="col-sm-5 col-sm-offset-2" style="text-align: right;">
+        
+        <h3><%= data.concertname %></h3>
+        <br>
+        <p><%= data.description %></p>
+        
+            <!-- <h3>콘서트 이름</h3>
+            <br>
+            <p> 1. 효율적인 암표방지 : 암표 매매를 일일이 단속할 필요가 없어져 효율적인 암표 예방 가능
+                2. 티켓관리 편의성 : 회원의 얼굴을 비교함으로써 티켓에 대한 필요성이 없어짐<br>
+                3. 입장시간 단축 : 입장시 그룹으로 묶어 카메라로 검사하여 시간을 월등히 단축<br>
+                4. 서비스 확장성 : 얼굴인식 기능이 필요한 다양한 서비스에 적용 가능</p><br> -->
+        <br/><br/>
+        <div class="ticket-price">
+            <span>최저가격: </span>
+            <br/>
+            <span class="price"><%= data.price %>원</span>
+        </div>
+        <br>
+        <p>
+            <button class="buyBtn btn btn-primary" displayNm="<%= data.displayName %>" concertId="<%= data.id %>" concertNm="<%= data.concertname %>">티켓구매하기</button>
+        </p>
+    </div>
+    <% } %>
 </div>
 
 
@@ -71,29 +92,92 @@
 
 
   <br><br><br><br><br><br>
-  <footer style="background-color: #FAED71; color: dark;">
-    <div class="container">
-      <br>
-      <div class="row">
-        <div class="col-sm-2">
-          <h5>Copyright &copy; 2018</h5>
-        </div>
-        <div class="col-sm-4">
-          <h5>Introduce</h5>
-          <p>현장 암표를 예방한 티켓팅하는 페이지입니다. <br>
-          안전한 티켓문화 권장합니다.</p>
-        </div>
-
+  <footer style="background-color: rgb(236, 236, 236); color: dark;">
+      <div class="container">
+          <br>
+          
+          <div class="row">
+              <div class="col-sm-2">
+                  <h5>Copyright &copy; 2018</h5>
+              </div>
+              <div class="col-sm-4">
+                  <h5>Introduce</h5>
+                  <p>현장 암표를 예방한 티켓팅하는 페이지입니다. <br>
+                  안전한 티켓문화 권장합니다.</p>
+              </div>
+          </div>
+  
+          <br>
       </div>
-
-    </div>
   </footer>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="../stylesheets/vendor/bootstrap/js/bootstrap.min.js"></script>
   <script>
-    $('.carousel').carousel({
-      interval: 2000
-    })
+        $(function(){
+            $('.carousel').carousel({
+                interval: 2000
+            });
+
+            // 구매버튼 클릭 이벤트
+            $(document).on('click', '.buyBtn', function(){
+                var displayNm = $(this).attr("displayNm");
+                var concertId = $(this).attr("concertId");
+                var concertNm = $(this).attr('concertNm');
+                postJsonToServer(displayNm, concertId, concertNm);
+                
+            });
+        });
+        
+        /**
+         * 현재 시간 구하는 함수
+         */
+        function getTime(){
+            var currdate = new Date();
+            var year = currdate.getFullYear();
+            var month = currdate.getMonth()+1;
+            var date = currdate.getDate();
+            var hour = currdate.getHours();
+            var minute = currdate.getMinutes();
+            var seconds = currdate.getSeconds();
+            
+            var result = year + "-" + month + "-" + date + " " + hour +":"+ minute + ":" + seconds;
+            return result;
+        }
+
+        /**
+         * json객체 ajax이용하여 서버로 POST요청
+         * @ 
+         */ 
+        function postJsonToServer(displayNm, concertId, concertNm){
+            var unm = displayNm;
+            var cid = concertId;
+            var cnm = concertNm;
+            var time = getTime();
+            var obj = {
+                "concertId" : cid,
+                "concertNm" : cnm,
+                "time" : time
+            }
+            var URL = 'http://210.102.181.158:62001/ticketcontent/buyTicket';
+
+            $.ajax({
+                url: URL,
+                type: "POST",
+                async: false,
+                complete: console.log(" Ajax call complete"),
+                // Request body
+                data: obj,
+                success: function(data){
+                    console.log(data);
+                    alert(unm+"님의 "+cnm+"에 대한 구매가 완료되었습니다.");
+                    window.location.href="http://210.102.181.158:62001/mypage";
+                },
+                error: function(error){
+                    console.log("fail post ajax", error);
+                }
+            });
+
+        }
   </script>
 </body>
 </html>

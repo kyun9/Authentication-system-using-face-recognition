@@ -2,15 +2,15 @@
 <html lang="ko" ng-app="imgg">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>티켓 Mart</title>
-  <link href="../stylesheets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-  <script src="controller/controller.js"></script>
-  <script>
-    function submit_check() {
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>티켓 Mart</title>
+    <link href="../stylesheets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="controller/controller.js"></script>
+    <script>
+        function submit_check() {
       if (!password.value || !password_confirm.value) {
         alert('항목을 다시 한번 확인해보세요.');
         return false;
@@ -37,262 +37,500 @@
 
     }
   </script>
-
+    <style>
+        input.postData.bttn {
+            /* border-radius: 2px; */
+            background: url("../images/microsoft-azure-button.jpg") no-repeat;
+            width: 160px;
+            height: 40px;
+        }
+        input.postData.bttn:hover {
+            background: whitesmoke;
+        }
+        .panel-title {
+            color: black;
+        }
+        footer {
+            position: relative;
+            top: 95px;
+        }
+    </style>
 </head>
 
 <body ng-controller="helloants">
-
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-        <a class="navbar-brand" href="/">
-          <font style="font-weight: bold; font-size: 30px;  text-shadow: #FAED71 0.2em 0.2em 0.2em; color: black">티켓 Market</font>
-        </a>
-      </div>
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li><a href="/ticketlist">티켓보기<span class="sr-only"></span></a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <% if(!user) { %>
-            <li><a href="/auth/login">로그인</a></li>
-            <li><a href="/auth/register">회원가입</a></li>
-            <% } else { %>
-              <li>
-                <a>
-                  <font style="font-weight: bold; font-size: 20px;">Welcome &nbsp;
-                    <%= user.displayName %>님</font>
-                </a>
-              </li>
-              <%  if(user.displayName== '관리자') { %>
-                <li><a href="/mypage">관리하기</a></li>
-                <% } else{ %>
-                  <li><a href="/mypage">마이페이지</a></li>
-                  <% } %>
+    
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                    <span class="sr-only"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><font style="font-weight: bold; font-size: 30px;   color: black">Ticket MarT</font></a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="/ticketlist">티켓목록<span class="sr-only"></span></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <% if(!user) { %>
+                    <li><a href="/auth/login">로그인</a></li>
+                    <li><a href="/auth/register">회원가입</a></li>
+                    <% } else { %>
+                    <li>
+                        <a>
+                            <font style="font-weight: bold; font-size: 20px;">Welcome &nbsp;
+                                <%= user.displayName %>님</font>
+                        </a>
+                    </li>
+                    <%  if(user.displayName== '관리자') { %>
+                    <li><a href="/mypage">관리하기</a></li>
+                    <% } else{ %>
+                    <li><a href="/mypage">마이페이지</a></li>
+                    <% } %>
                     <li><a href="/auth/logout">로그아웃</a></li>
                     <% } %>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <br><br><br>
-  <div class="container">
-    <ul id="myTab" class="nav nav-tabs" role="tablist">
-      <li class="active">
-        <a href="#ticketlist">티켓구매목록</a>
-      </li>
-      <li>
-        <a href="#photo" class="">회원사진관리</a>
-      </li>
-      <li>
-        <a href="#infochange" class="">회원정보변경</a>
-      </li>
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="ticketlist">
-        <br><br><br>
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="panel panel-primary">
-                <div class="panel-heading">
-                  <h3 class="panel-title">
-                    <span>
-                      &nbsp;&nbsp;티켓구매목록
-                    </span>
-                  </h3>
-                </div>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>티켓명</th>
-                      <th>구매일시</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>아이유</td>
-                      <td>몰라</td>
-                    </tr>
-                  </tbody>
-
-                </table>
-              </div>
+                </ul>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="tab-pane" id="photo">
-        <br><br><br>
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="panel panel-primary">
-                <div class="panel-heading">
-                  <h3 class="panel-title">
-                    <span>
-                      &nbsp;&nbsp;이미지 업로드
-                    </span>
-                  </h3>
-                </div>
-                <table class="table">
-                  <thead>
-                    <form action='/mypage/upload/<%= user.id %>' method="post" enctype="multipart/form-data">
-                      <tr>
-                        <th>
-                          <input type='file' name='upload' />
-                        </th>
-                        <th>
-                          <input type='submit' value="업로드하기" />
-                        </th>
-                      </tr>
-
-                    </form>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <!-- <div ng-repeat="image in imageList"> -->
-                        <!-- <img src="../resources/images/<%= user.displayName %>/캡처.png" width="150" height="150" /> -->
-                        <img src="../<%= user.ImgPath %>" width="250" height="250" />
-                        <!-- </div> -->
-                        <!-- ../images/1_c.png -->
-                      </td>
-                    </tr>
-                  </tbody>
-
-                </table>
-
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="tab-pane" id="infochange">
-        <br><br><br>
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="panel panel-primary">
-                <div class="panel-heading">
-                  <h3 class="panel-title">
-                    <span>
-                      &nbsp;&nbsp;회원정보변경
-                    </span>
-                  </h3>
-                </div>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>&nbsp;비밀번호 변경</th>
-                      <th>&nbsp;이메일 변경</th>
-                      <th>회원 정보</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <form action="/mypage/modify_password/<%= user.id %>" method="post">
-                          <p>
-                            <input type="password" name="password" id="password" placeholder="변경할 비밀번호" value="" />
-                          </p>
-                          <p>
-                            <input type="password" name="password_confirm" id="password_confirm" placeholder="변경할 비밀번호 확인" value="" />
-                          </p>
-                          <p>
-                            <input type="submit" value="변경" onclick="return submit_check()" />
-                          </p>
-                        </form>
-                      </td>
-
-                      <td>
-
-                        <form action="/mypage/modify_email/<%= user.id %>" method="post">
-                          <p>
-                            <input type="email" name="email" id="email" placeholder="<%= user.email %>" value="" />
-                          </p>
-                          <p>
-                            <input type="submit" value="변경" onclick="submit_check2()" />
-                          </p>
-                        </form>
-                      </td>
-                      <td>
-                        <table>
-                          <tr>
-                            <td>아이디 : </td>
-                            <td>
-                              &nbsp;<%= user.username %>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>이 름 : </td>
-                            <td>
-                              &nbsp;<%= user.displayName %>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>이메일 : </td>
-                            <td>
-                              &nbsp;<%= user.email %>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
-  <br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-  <footer style="background-color: #FAED71; color: dark;">
+    </nav>
+    <br><br><br>
     <div class="container">
-      <br>
-      <div class="row">
-        <div class="col-sm-2">
-          <h5>Copyright &copy; 2018</h5>
-        </div>
-        <div class="col-sm-4">
-          <h5>Introduce</h5>
-          <p>현장 암표를 예방한 티켓팅하는 페이지입니다. <br> 안전한 티켓문화 권장합니다.</p>
-        </div>
+        <ul id="myTab" class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#ticketlist">티켓구매목록</a>
+            </li>
+            <li>
+                <a href="#photo" class="manageImg">회원사진관리</a>
+            </li>
+            <li>
+                <a href="#infochange" class="">회원정보변경</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="ticketlist">
+                <br><br><br>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="panel panel-primary" style="border: 1px solid rgb(211, 211, 211);">
+                                <div class="panel-heading" style="background: whitesmoke; border-bottom: 1px solid rgb(211, 211, 211);">
+                                    <h3 class="panel-title" >
+                                        <span>
+                                            &nbsp;&nbsp;티켓구매목록
+                                        </span>
+                                    </h3>
+                                </div>
+                                <table class="table" >
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>티켓명</th>
+                                            <th>구매일시</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>아이유 이지금 CONCERT</td>
+                                            <td>2018.10.27</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>아이유 이지금 CONCERT</td>
+                                            <td>2018.10.28</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>박효신 So Happy Together Concert</td>
+                                            <td>2018.10.28</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>멜로망스 DAN CONCERT</td>
+                                            <td>2018.10.28</td>
+                                        </tr>
+                                    </tbody>
 
-      </div>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="photo">
+                <br><br><br>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="panel panel-primary" style="border: 1px solid rgb(211, 211, 211);">
 
+                                <div class="panel-heading" style="background: whitesmoke; border-bottom: 1px solid rgb(211, 211, 211);">
+                                    <h3 class="panel-title">
+                                        <span>
+                                            &nbsp;&nbsp;이미지 업로드
+                                        </span>
+                                    </h3>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <form action='/mypage/upload/<%= user.id %>' method="post" enctype="multipart/form-data">
+                                                <th>
+                                                    <input type='file' class="loadFile bttn" name='upload' />
+                                                </th>
+                                                <th>
+                                                    <input type='submit' class="imgUpload bttn" value="업로드하기" id="btnUpload" />
+                                                </th>
+                                            </form>
+                                            <form action="/mypage/deleteImg/<%= user.id %>" method="GET">
+                                            <th>
+                                                <input type='submit' class="imgDelete bttn" value="이미지삭제"/>
+                                            </th>
+                                            </form>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id="userImg">
+                                                <!-- <div ng-repeat="image in imageList"> -->
+                                                <!-- <img src="../resources/images/<%= user.displayName %>/캡처.png" width="150" height="150" /> -->
+                                                <img src="../<%= user.ImgPath %>" width="250" height="250" />
+                                                <!-- </div> -->
+                                                <!-- ../images/1_c.png -->
+                                            </td>
+                                            <td>
+                                                <h3>회원 이미지 정보</h3>
+                                                <hr />
+                                                <% if(user) { %>
+                                                    <div style="display: none;">
+                                                        <span>ImgPath: </span><span id="spanImgPath"><%= user.ImgPath %></span>
+                                                        <hr />
+                                                    </div>
+                                                    
+                                                <span>회원 API 키: </span><span id="spanPersonId"><%= user.personId %></span>
+                                                <hr />
+                                                    
+                                                
+                                                <span>내 이미지 API 키: </span><span id="spanFaceId"><%= user.faceId %></span>
+                                                <% } %>
+                                            </td>
+                                            <td>
+                                                <br />
+                                                <% if(user) { %>
+                                                <% if(!user.faceId) { %>
+                                                <form id="postApi-form" action='/mypage/saveFaceId/<%= user.id %>' method="post">
+                                                    <input type="hidden" class="postData" value="">
+                                                    <input type="submit" class="postData bttn" value=" ">
+                                                </form>
+                                                <% } else { %>
+                                                <div id="existFaceId">
+                                                    <img src="../images/microsoft-azure-button.jpg"/><span style="color: gray;">등록완료</span>
+                                                </div>
+                                                <% } %>
+                                                <% } %>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="infochange">
+                <br><br><br>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="panel panel-primary" style="border: 1px solid rgb(211, 211, 211);">
+                                <div class="panel-heading" style="background: whitesmoke; border-bottom: 1px solid rgb(211, 211, 211);" >
+                                    <h3 class="panel-title">
+                                        <span>
+                                            &nbsp;&nbsp;회원정보변경
+                                        </span>
+                                    </h3>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>&nbsp;비밀번호 변경</th>
+                                            <th>&nbsp;이메일 변경</th>
+                                            <th>회원 정보</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <form action="/mypage/modify_password/<%= user.id %>" method="post">
+                                                    <p>
+                                                        <input type="password" name="password" id="password" placeholder="변경할 비밀번호" value="" />
+                                                    </p>
+                                                    <p>
+                                                        <input type="password" name="password_confirm" id="password_confirm" placeholder="변경할 비밀번호 확인" value="" />
+                                                    </p>
+                                                    <p>
+                                                        <input type="submit" value="변경" onclick="return submit_check()" />
+                                                    </p>
+                                                </form>
+                                            </td>
+
+                                            <td>
+
+                                                <form action="/mypage/modify_email/<%= user.id %>" method="post">
+                                                    <p>
+                                                        <input type="email" name="email" id="email" placeholder="<%= user.email %>" value="" />
+                                                    </p>
+                                                    <p>
+                                                        <input type="submit" value="변경" onclick="submit_check2()" />
+                                                    </p>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td>아이디 : </td>
+                                                        <td>
+                                                            &nbsp;
+                                                            <%= user.username %>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>이 름 : </td>
+                                                        <td>
+                                                            &nbsp;
+                                                            <%= user.displayName %>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>이메일 : </td>
+                                                        <td>
+                                                            &nbsp;
+                                                            <%= user.email %>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </footer>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="../stylesheets/vendor/bootstrap/js/bootstrap.min.js"></script>
-  <script>
-    $(function() {
-      $('#myTab a:first').tab('show');
-    })
-    $('#myTab a').click(function(e) {
-      e.preventDefault();
-      $(this).tab('show');
-    })
-  </script>
+
+
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    <footer style="background-color: rgb(236, 236, 236); color: dark;">
+            <div class="container">
+                <br>
+                
+                <div class="row">
+                    <div class="col-sm-2">
+                        <h5>Copyright &copy; 2018</h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5>Introduce</h5>
+                        <p>현장 암표를 예방한 티켓팅하는 페이지입니다. <br>
+                        안전한 티켓문화 권장합니다.</p>
+                    </div>
+                </div>
+
+                <br>
+            </div>
+        </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="../stylesheets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $('#myTab a:first').tab('show');
+
+            $(document).on('click', '.putImgToApiTest', function () {
+                sendImgToApiTest();
+            });
+
+            $(document).on('click', '.postData.bttn', function () {
+                return sendImgToApi();
+            });
+
+            $(document).delegate('.imgDelete.bttn', 'click', function (res) {
+                console.log("res: ", res);
+                deleteImg();
+                // window.open('/');
+            });
+        })
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+        var cln = $('.postData:eq(0)').clone();
+        /**
+         * Face Api 서버로 img 전송
+         */
+        function sendImgToApiTest() {
+            // var imgPath = $('#userImg').find('img').attr("src");
+            var imgPath = $('#spanImgPath').text();
+            var personId = $('#spanPersonId').text();
+            if (imgPath != "") {
+                // alert("당신의 imgPath : " + imgPath);
+                var cfirm = confirm("현재 등록된 회원사진이 있습니다. API에 추가하시겠습니까?");
+                if (cfirm) {
+                    alert("당신의 imgPath : " + imgPath);
+                    var returnData = callApi(imgPath, personId);
+                    console.log("호출 완료 후 returnData: ", returnData);
+                    console.log("콜 완료");
+                } else {
+                    alert("취소하셨습니다.");
+                }
+                return imgPath;
+            } else {
+                alert("현재 업로드된 사진이 없습니다.");
+            }
+        }
+
+        function sendImgToApi() {
+            var imgPath = $('#spanImgPath').text();
+            var personId = $('#spanPersonId').text();
+            if (imgPath != "") {
+                var cfirm = confirm("현재 등록된 회원사진이 있습니다. API에 추가하시겠습니까?");
+                if (cfirm) {
+                    alert("당신의 imgPath : " + imgPath);
+                    var returnData = callApi(imgPath, personId);
+                    setValue(returnData);
+                    console.log("호출 완료 후 returnData: ", returnData);
+                    return true;
+                } else {
+                    alert("취소하셨습니다.");
+                }
+                return imgPath;
+            } else {
+                alert("현재 업로드된 사진이 없습니다.");
+            }
+        }
+
+        /**
+         * Ajax로 addFace reference Api 호출
+         * param imgPath, personId
+         * return faceId
+         */
+        function callApi(imgPath, PersonId) {
+
+            var params = {
+                // Request parameters
+                // "userData": "{string}",
+                // "targetFace": "{string}",
+            };
+            const personId = PersonId;
+            const userKey = "27137d0eff8747a8b311a984837f29fb";
+            var urls = {
+                "url": "http://210.102.181.158:62001/" + imgPath
+            }
+            var stringfyUrl = JSON.stringify(urls);
+            console.log("stringfyUrl: " + stringfyUrl);
+            var result;
+            $.ajax({
+                    url: "https://southeastasia.api.cognitive.microsoft.com/face/v1.0/largepersongroups/18061001/persons/" +
+                        personId + "/persistedfaces?" + $.param(params),
+                    beforeSend: function (xhrObj) {
+                        // Request headers
+                        xhrObj.setRequestHeader("Content-Type", "application/json");
+                        xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", userKey);
+                    },
+                    type: "POST",
+                    async: false,
+                    complete: console.log("complete call json"),
+                    // Request body
+                    data: stringfyUrl,
+                })
+                .done(function (data) {
+                    console.log("success call json");
+                    console.log("data: ", JSON.stringify(data));
+                    console.log("data.persistedFaceIds: ", JSON.stringify(data.persistedFaceId));
+                    var faceId = data.persistedFaceId;
+                    console.log("faceId: ", faceId);
+                    callApi.objDataReturned = faceId;
+                })
+                .fail(function (error) {
+                    result = JSON.stringify(error);
+                    console.log("Add_Face result: ", result);
+                    alert("Add_Face result: ", result);
+                    console.log(error);
+                });
+            return callApi.objDataReturned;
+        }
+
+        /**
+         * API 업로드 시 필요한 faceId 데이터 input박스에 setting 해주는 함수
+         */
+        function setValue(faceId) {
+            console.log("jsonReturnData: ", faceId);
+            // $('.postData').attr("value", faceId);
+            // alert($('.postData').attr("value"));
+
+            cln.attr('name', 'faceId').attr('id', 'faceId').removeAttr('placeholder').attr('value', faceId).attr('type',
+                'hidden');
+            cln.appendTo('#postApi-form');
+        }
+
+        /**
+         * 이미지 삭제 함수
+         */
+        function deleteImg() {
+            var imgPath = $('#spanImgPath').text();;
+            var personId = $('#spanPersonId').text();
+            var faceId =$('#spanFaceId').text();
+            console.log(imgPath, personId, faceId);
+            
+            delFaceApi(personId, faceId);
+        }
+        
+        /**
+         * API 서버 내의 이미지 삭제를 위한 AJAX 함수
+         * @param personId, faceId
+         */
+        function delFaceApi(PersonId, faceId){
+            var personId            = PersonId;
+            var persistedFaceId    = faceId;
+            const userKey           = "27137d0eff8747a8b311a984837f29fb";
+            
+            var params = {
+                // Request parameters
+            };
+            $.ajax({
+                url: "https://southeastasia.api.cognitive.microsoft.com/face/v1.0/largepersongroups/18061001/persons/" +personId+ "/persistedfaces/" +persistedFaceId+ "?" + $.param(params),
+                beforeSend: function(xhrObj){
+                    // Request headers
+                    xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",userKey);
+                },
+                type: "DELETE",
+                async: false,
+                complete: console.log("deleteFace API call complete"),
+                // Request body
+                data: "",
+            })
+            .done(function(data) {
+                console.log("success DeleteFace API");
+            })
+            .fail(function(error) {
+                console.log("error: ", error);
+            });
+        }
+
+
+    </script>
 </body>
 
 </html>
