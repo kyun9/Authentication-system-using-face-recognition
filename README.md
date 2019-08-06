@@ -29,5 +29,4 @@ Ticket_markeT is ticketing site by using user authentication of Azure FaceAPI .
 
 <hr/>
 
-<iframe width="689" height="304" src="https://www.youtube.com/embed/Phi0bFG2tgY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+[![Watch the video](ticketmarkeT.png)](https://www.youtube.com/embed/Phi0bFG2tgY)
