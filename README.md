@@ -8,6 +8,11 @@
 
 Ticket_markeT is ticketing site by using user authentication of Azure FaceAPI .
 
+- Microsoft Azure FaceAPI
+- bkfd2Password Encryption
+- formidable upload Image
+- passport(User Authentcation Library)
+
 <hr/>
 
 ### Stack
